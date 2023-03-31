@@ -32,10 +32,10 @@ locals {
       }
     }
     mnemonic                   = var.mnemonic
-    discordHookUrl             = "https://discord.com/api/webhooks/${var.discord_webhook_key}"
-    telegramApiKey             = "${var.telegram_api_key}"
-    telegramChatId             = "${var.telegram_chat_id}"
-    betterUptimeApiKey         = "${var.betteruptime_api_key}"
-    betterUptimeRequesterEmail = "${var.betteruptime_requester_email}"
+    discordHookUrl             = var.discord_webhook_key != null ? "https://discord.com/api/webhooks/${var.discord_webhook_key}" : null
+    telegramApiKey             = var.telegram_api_key
+    telegramChatId             = var.telegram_chat_id
+    betterUptimeApiKey         = var.betteruptime_api_key
+    betterUptimeRequesterEmail = var.betteruptime_requester_email
   })
 }
