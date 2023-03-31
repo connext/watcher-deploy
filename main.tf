@@ -20,15 +20,10 @@ data "aws_iam_role" "ecr_admin_role" {
 
 data "aws_caller_identity" "current" {}
 
-data "aws_route53_zone" "primary" {
-  zone_id = var.route53_zone_id
-}
-
 
 module "watcher" {
   source                   = "./config/modules/service"
   region                   = var.region
-  zone_id                  = data.aws_route53_zone.primary.zone_id
   execution_role_arn       = data.aws_iam_role.ecr_admin_role.arn
   cluster_id               = module.ecs.ecs_cluster_id
   vpc_id                   = module.network.vpc_id

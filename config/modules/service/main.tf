@@ -1,9 +1,14 @@
+data "aws_route53_zone" "default" {
+  name = var.base_domain
+}
+
 module "acm_request_certificate" {
   source                            = "cloudposse/acm-request-certificate/aws"
   domain_name                       = var.base_domain
   process_domain_validation_options = true
   ttl                               = "300"
-  subject_alternative_names         = ["*.${base_domain}"]
+  subject_alternative_names         = ["*.${var.base_domain}"]
+  zone_id                           = data.aws_route53_zone.default.zone_id
 }
 
 resource "aws_cloudwatch_log_group" "container" {
@@ -146,7 +151,7 @@ resource "aws_security_group" "lb" {
 }
 
 resource "aws_route53_record" "www" {
-  zone_id = var.zone_id
+  zone_id = data.aws_route53_zone.default.zone_id
   name    = "${var.container_family}.${var.base_domain}"
   type    = "CNAME"
   ttl     = "300"

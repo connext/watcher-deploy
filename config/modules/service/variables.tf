@@ -66,15 +66,10 @@ variable "service_security_groups" {
   type = list(string)
 }
 
-
-variable "zone_id" {
-  description = "Hosted zone id"
-}
-
 variable "base_domain" {
   description = "Base domain of the application"
 }
 
 variable "container_env_vars" {
-  description = "Env vars for running container"
+  description = "env vars for running container"
 }

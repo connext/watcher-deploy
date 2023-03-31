@@ -1,12 +1,4 @@
-variable "ecs_cluster_name_prefix" {
+variable "ecs_cluster_name" {
+  description = "Cluster name"
+  type        = string
 }
-
-variable "private_subnets" {
-  type = list(string)
-}
-
-variable "public_subnets" {
-  type = list(string)
-}
-
-variable "vpc_id" {}
