@@ -32,6 +32,7 @@ For ease of dealing with terraform, install [`tfenv`](https://github.com/tfutils
 
 ```
 >>> tfenv install 1.4.4
+>>> tfenv use 1.4.4
 ```
 
 ### 2. S3 State bucket
@@ -55,6 +56,8 @@ terraform {
 ```
 
 ### 3. Variables Required
+
+These need to be set in GHA secrets (or deployment secrets). They will be accessed on CI runtime here: [ci.yaml#L11]()
 
 **3.1. Route53 Zone ID** (`route53_zone_id`) \[REQUIRED\]
 
@@ -85,10 +88,9 @@ Randomly generated string for server auth
 ## Deployment & Usage
 
 Deployment should occur only via CICD with Github Actions. However, it is also possible to deploy the infra
-from a local set up. Ensure you have the right AWS credentials and `terraform 1.1.7` installed
-([instructions](https://learn.hashicorp.com/tutorials/terraform/install-cli))
+from a local set up. Ensure you have the right AWS credentials and `terraform 1.4.4` installed as described above
 
-Then, navigate to the `environment` you'd like to operate on (`testnet`, `staging`, `mainnet`), and do:
+From top level:
 
 ```shell
 >>> terraform init
