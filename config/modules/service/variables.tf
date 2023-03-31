@@ -51,8 +51,6 @@ variable "timeout" {
 
 variable "region" {}
 
-variable "environment" {}
-
 variable "ingress_cdir_blocks" {
   type = list(string)
 }
@@ -70,18 +68,13 @@ variable "service_security_groups" {
 
 
 variable "zone_id" {
-  description = "hosted zone id"
-}
-
-variable "cert_arn" {
-  description = "ACM certificate"
+  description = "Hosted zone id"
 }
 
 variable "base_domain" {
-  description = "base domain of the application"
-  default     = "connext.ninja"
+  description = "Base domain of the application"
 }
 
 variable "container_env_vars" {
-  description = "env vars for running container"
+  description = "Env vars for running container"
 }

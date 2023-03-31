@@ -1,3 +1,11 @@
+module "acm_request_certificate" {
+  source                            = "cloudposse/acm-request-certificate/aws"
+  domain_name                       = var.base_domain
+  process_domain_validation_options = true
+  ttl                               = "300"
+  subject_alternative_names         = ["*.${base_domain}"]
+}
+
 resource "aws_cloudwatch_log_group" "container" {
   name = var.container_family
   tags = {
@@ -13,10 +21,7 @@ resource "aws_ecs_task_definition" "service" {
   memory                   = var.memory
   execution_role_arn       = var.execution_role_arn
   tags = {
-    Environment = var.environment
-    Stage       = var.stage
-    Family      = var.container_family
-    Domain      = var.domain
+    Family = var.container_family
   }
   container_definitions = jsonencode([
     {
@@ -104,7 +109,7 @@ resource "aws_lb_listener" "https" {
   port              = "443"
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-2016-08"
-  certificate_arn   = var.cert_arn
+  certificate_arn   = module.acm_request_certificate.arn
 
   default_action {
     type             = "forward"
@@ -142,9 +147,10 @@ resource "aws_security_group" "lb" {
 
 resource "aws_route53_record" "www" {
   zone_id = var.zone_id
-  name    = "${var.container_family}.${var.environment}.${var.base_domain}"
+  name    = "${var.container_family}.${var.base_domain}"
   type    = "CNAME"
   ttl     = "300"
   records = [aws_alb.lb.dns_name]
 }
+
 
