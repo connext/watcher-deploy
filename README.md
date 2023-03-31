@@ -57,11 +57,13 @@ terraform {
 
 ### 3. Variables Required
 
-These need to be set in GHA secrets (or deployment secrets). They will be accessed on CI runtime here: [ci.yaml#L11]()
+These need to be set in GHA secrets (or deployment secrets). They will be accessed on CI runtime here: [ci.yaml#L11](https://github.com/connext/watcher-deploy/blob/main/.github/workflows/ci.yaml#L11-L26)
 
-**3.1. Route53 Zone ID** (`route53_zone_id`) \[REQUIRED\]
+These need to be set exactly as named, e.g.
 
-For the domain you wish to use, grab the Zone ID from Route 53's console. It looks something like "Z03634792TWUEHHQ5L0YX"
+**3.1. Route53 Zone ID** (`route53_zone_id`) \[ REQUIRED \]
+
+For the domain you wish to use, grab the Zone ID from Route 53's console. It looks something like "Z036347XXXXXHHQ5L0YX"
 
 **3.2. Base Domain** (`base_domain`) \[REQUIRED\]
 
