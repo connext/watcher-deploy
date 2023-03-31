@@ -1,7 +1,6 @@
 {
-  "route53_zone_id": "Z3A4XV2QSGXX4X",
-  "base_domain": "example.com",
-  "mnemonic": "female autumn drive capable scorpion congress hockey chunk mouse cherry blame trumpet",
-  "full_image_name_watcher": "ghcr.io/connext/watcher:sha-b5bb49a",
-  "admin_token_watcher": "foo"
+  "region": "us-east-1",
+  "base_domain": "connextapi.com",
+  "ecs_cluster_name": "watcher-deploy",
+  "full_image_name_watcher": "ghcr.io/connext/watcher:sha-b5bb49a"
 }

@@ -1,5 +1,5 @@
 variable "region" {
-  default = "us-east-2"
+  description = "AWS region"
 }
 
 variable "cidr_block" {
@@ -18,10 +18,6 @@ variable "ecs_cluster_name" {
   description = "Cluster name"
 }
 
-variable "route53_zone_id" {
-  type = string
-}
-
 variable "mnemonic" {
   type        = string
   description = "mnemonic"
@@ -37,26 +33,30 @@ variable "full_image_name_watcher" {
 
 variable "admin_token_watcher" {
   type    = string
-  default = "blahblah"
+  default = "foo"
 }
 
 variable "discord_webhook_key" {
-  type = string
+  type    = string
+  default = null
 }
 
 variable "telegram_api_key" {
-  type = string
+  type    = string
+  default = null
 }
 
 variable "telegram_chat_id" {
-  type = string
+  type    = string
+  default = null
 }
 
 variable "betteruptime_api_key" {
-  type = string
+  type    = string
+  default = null
 }
 
 variable "betteruptime_requester_email" {
   type    = string
-  default = "layne@connext.network"
+  default = null
 }

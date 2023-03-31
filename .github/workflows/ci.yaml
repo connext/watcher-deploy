@@ -8,10 +8,7 @@ on:
 jobs:
   deploy-infra:
     env:
-      TF_VAR_route53_zone_id: ${{ secrets.route53_zone_id }}
-      TF_VAR_base_domain: ${{ secrets.base_domain }}
       TF_VAR_mnemonic: ${{ secrets.mnemonic }}
-      TF_VAR_full_image_name_watcher: ${{ secrets.full_image_name_watcher }}
       
     
     #  Enable these if you want to use the discord/telegram/betteruptime integrations
@@ -43,7 +40,7 @@ jobs:
         run: terraform init
 
       - name: Terraform Plan
-        run: terraform plan
+        run: terraform plan -var-file=tfvars.json
 
       - name: Terraform Deploy
-        run: terraform apply -auto-approve
+        run: terraform apply -var-file=tfvars.json -auto-approve
