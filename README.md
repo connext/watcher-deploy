@@ -55,33 +55,43 @@ terraform {
 }
 ```
 
-### 3. Variables Required
+## 3. Variables
+
+### 3.1 Non-secret Variables
+
+These should be placed in the `tfvars.json` file. They include
+
+**3.1.1. Base Domain** (`base_domain`) \[REQUIRED\]
+
+The base domain, of your hosted zone e.g. `connext.ninja`
+
+**3.1.2. Watcher docker image** (`full_image_name_watcher`) \[REQUIRED\]
+
+Fetch it from the desired release on Connext's [Github Packages](https://github.com/connext/monorepo/pkgs/container/watcher), e.g. `ghcr.io/connext/watcher:sha-b5bb49a`
+
+**3.1.3. ECS Cluster Name** (`ecs_cluster_name`) \[REQUIRED\]
+
+Name of the cluster. Must not contain spaces. E.g. `watcher-deploy`
+
+**3.1.4. AWS Region** (`region`) \[REQUIRED\]
+
+Region to which the cluster will be deployed
+
+### 3.2 Secret Variables
 
 These need to be set in GHA secrets (or deployment secrets). They will be accessed on CI runtime here: [ci.yaml#L11](https://github.com/connext/watcher-deploy/blob/main/.github/workflows/ci.yaml#L11-L26)
 
 These need to be set exactly as named, e.g.
 
-**3.1. Route53 Zone ID** (`route53_zone_id`) \[ REQUIRED \]
-
-For the domain you wish to use, grab the Zone ID from Route 53's console. It looks something like "Z036347XXXXXHHQ5L0YX"
-
-**3.2. Base Domain** (`base_domain`) \[REQUIRED\]
-
-The base domain, of your hosted zone e.g. `connext.ninja`
-
-**3.3. Mnemonic** (`mnemonic`) \[REQUIRED\]
+**3.2.1. Mnemonic** (`mnemonic`) \[REQUIRED\]
 
 The mnemonic key used by the watcher
 
-**3.4. Watcher docker image** (`full_image_name_watcher`) \[REQUIRED\]
-
-Fetch it from the desired release on Connext's [Github Packages](https://github.com/connext/monorepo/pkgs/container/watcher), e.g. `ghcr.io/connext/watcher:sha-b5bb49a`
-
-**3.4. Watcher's admin token** (`admin_token_watcher`) \[OPTIONAL\]
+**3.2.2. Watcher's admin token** (`admin_token_watcher`) \[OPTIONAL\]
 
 Randomly generated string for server auth
 
-**3.5. Alerting Secrets** \[OPTIONAL\]
+**3.2.3. Alerting Secrets** \[OPTIONAL\]
 
 - `discord_webhook_key`
 - `telegram_api_key` and `telegram_chat_id`
@@ -92,16 +102,28 @@ Randomly generated string for server auth
 Deployment should occur only via CICD with Github Actions. However, it is also possible to deploy the infra
 from a local set up. Ensure you have the right AWS credentials and `terraform 1.4.4` installed as described above
 
+Also, you'll need to have set the secrets to your environment:
+
+```shell
+export TF_VAR_mnemonic="emale autumn drive capable scorpion congress hockey chunk ..."
+export TF_VAR_admin_token_router="foo"
+...
+```
+
 From top level:
 
 ```shell
 >>> terraform init
 ```
 
-Make your changes,
+Plan the changes:
 
 ```shell
->>> terraform plan
+>>> terraform plan -var-file=tfvars.json
 ```
 
 To set custom variables, you can set them with `export TF_ENV_<variable_name>=<variable value>` or use the `tfvars.json` file.
+
+```shell
+>>> terraform apply var-file=tfvars.json -auto-approve
+```
