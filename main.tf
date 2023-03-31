@@ -1,9 +1,10 @@
 terraform {
   backend "s3" {
-    bucket = "nxtp-terraform-mainnet-prod-core"
-    key    = "state/"
-    region = "us-east-1"
+    bucket = "test-tf-state-watcher"
+    key    = "state"
+    region = "eu-central-1"
   }
+  required_version = "~> 1.4.4"
 }
 
 provider "aws" {
@@ -25,7 +26,7 @@ data "aws_route53_zone" "primary" {
 
 
 module "watcher" {
-  source                   = "./modules/service"
+  source                   = "./config/modules/service"
   region                   = var.region
   zone_id                  = data.aws_route53_zone.primary.zone_id
   execution_role_arn       = data.aws_iam_role.ecr_admin_role.arn
@@ -45,28 +46,23 @@ module "watcher" {
   ingress_cdir_blocks      = [module.network.vpc_cdir_block]
   ingress_ipv6_cdir_blocks = []
   service_security_groups  = flatten([module.network.allow_all_sg, module.network.ecs_task_sg])
-  cert_arn                 = var.certificate_arn
   container_env_vars       = local.watcher_env_vars
+  base_domain              = var.base_domain
 }
 
 
 module "network" {
-  source     = "./modules/networking"
+  source     = "./config/modules/networking"
   cidr_block = var.cidr_block
 }
 
 
 module "ecs" {
-  source           = "./modules/ecs"
+  source           = "./config/modules/ecs"
   ecs_cluster_name = var.ecs_cluster_name
 }
 
 
 module "iam" {
-  source = "./modules/iam"
-}
-
-module "kms" {
-  source     = "./modules/kms"
-  account_id = data.aws_caller_identity.current.account_id
+  source = "./config/modules/iam"
 }
