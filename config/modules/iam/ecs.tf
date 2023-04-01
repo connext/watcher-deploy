@@ -20,17 +20,15 @@ data "aws_iam_policy_document" "task_execution_cloudwatch_access" {
     actions = [
       "logs:*",
     ]
-    resources = [      
-      "arn:aws:logs:us-east-1:*:*", 
-      "arn:aws:logs:us-east-2:*:*", 
-      "arn:aws:logs:us-west-1:*:*", 
-      "arn:aws:logs:us-west-2:*:*"]
+    resources = [
+      "*"
+    ]
   }
 }
 
 
 resource "aws_iam_role" "ecr_admin_role" {
-  name               = "erc_admin_role"
+  name               = "${var.ecs_cluster_name}-erc-admin-role"
   assume_role_policy = data.aws_iam_policy_document.cloudwatch_assume_role.json
 }
 
@@ -39,6 +37,6 @@ resource "aws_iam_role_policy_attachment" "cloudwatch" {
   policy_arn = aws_iam_policy.cloudwatch.arn
 }
 resource "aws_iam_policy" "cloudwatch" {
-  name   = "ecs-cloudwatch-execution"
+  name   = "${var.ecs_cluster_name}-ecs-cloudwatch-execution"
   policy = data.aws_iam_policy_document.task_execution_cloudwatch_access.json
 }

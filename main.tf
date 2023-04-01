@@ -14,9 +14,6 @@ provider "aws" {
 # Fetch AZs in the current region
 data "aws_availability_zones" "available" {}
 
-data "aws_iam_role" "ecr_admin_role" {
-  name = "erc_admin_role"
-}
 
 data "aws_caller_identity" "current" {}
 
@@ -24,7 +21,7 @@ data "aws_caller_identity" "current" {}
 module "watcher" {
   source                   = "./config/modules/service"
   region                   = var.region
-  execution_role_arn       = data.aws_iam_role.ecr_admin_role.arn
+  execution_role_arn       = module.iam.execution_role_arn
   cluster_id               = module.ecs.ecs_cluster_id
   vpc_id                   = module.network.vpc_id
   private_subnets          = module.network.private_subnets
@@ -59,5 +56,6 @@ module "ecs" {
 
 
 module "iam" {
-  source = "./config/modules/iam"
+  source           = "./config/modules/iam"
+  ecs_cluster_name = var.ecs_cluster_name
 }

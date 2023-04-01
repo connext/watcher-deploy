@@ -31,6 +31,7 @@ locals {
         providers = ["https://rpc.gnosischain.com", "https://rpc.ankr.com/gnosis", "https://xdai-rpc.gateway.pokt.network", "https://rpc.gnosis.gateway.fm"]
       }
     }
+    hubDomain                  = "6648936"
     mnemonic                   = var.mnemonic
     discordHookUrl             = var.discord_webhook_key != null ? "https://discord.com/api/webhooks/${var.discord_webhook_key}" : null
     telegramApiKey             = var.telegram_api_key
