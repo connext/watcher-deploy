@@ -9,16 +9,17 @@ This folder contains all the code necessary to deploy the watcher service to a b
 ## Scaffolding
 
 ```text
+.github/workflows/ci.yaml    <- CI Workflow
 config
- ├── main.tf         <- Entrypoint for all the module instantiations
- ├── variables.tf    <- Required input variables
- ├── outputs.tf      <- Generated console outputs
- ├── config.tf       <- Configuration for service
+ ├── main.tf                 <- Entrypoint for all the module instantiations
+ ├── variables.tf            <- Required input variables
+ ├── outputs.tf              <- Generated console outputs
+ ├── config.tf               <- Configuration for service
  └── modules
-      ├── service    <- Generic, configurable ECS service
-      ├── ecs        <- ECS cluster definition
-      ├── iam        <- IAM roles needed for ECS
-      └── networking <- VPCs, Subnets and all those shenanigans
+      ├── service            <- Generic, configurable ECS service
+      ├── ecs                <- ECS cluster definition
+      ├── iam                <- IAM roles needed for ECS
+      └── networking         <- VPCs, Subnets and all those shenanigans
 
 ```
 
@@ -81,19 +82,21 @@ These need to be set in GHA secrets (or deployment secrets). They will be access
 
 These need to be set exactly as named, e.g.
 
-**3.2.1. Mnemonic** (`mnemonic`) \[REQUIRED\]
+Make sure to edit the `ci.yaml` accordingly, if you plan on using the optional (commented out) variables.
+
+**3.2.1. Mnemonic** (`MNEMONIC`) \[REQUIRED\]
 
 The mnemonic key used by the watcher
 
-**3.2.2. Watcher's admin token** (`admin_token_watcher`) \[OPTIONAL\]
+**3.2.2. Watcher's admin token** (`ADMIN_TOKEN_WATCHER`) \[OPTIONAL\]
 
 Randomly generated string for server auth
 
 **3.2.3. Alerting Secrets** \[OPTIONAL\]
 
-- `discord_webhook_key`
-- `telegram_api_key` and `telegram_chat_id`
-- `betteruptime_api_key` and `betteruptime_requester_email`
+- `DISCORD_WEBHOOK_KEY`
+- `TELEGRAM_API_KEY` and `TELEGRAM_CHAT_ID`
+- `BETTERUPTIME_API_KEY` and `BETTERUPTIME_REQUESTER_EMAIL`
 
 ## Deployment & Usage
 

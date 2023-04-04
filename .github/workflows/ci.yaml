@@ -3,24 +3,25 @@ name: CI
 on:
   push:
     branches:
-      - development
+      - main
 
 jobs:
   deploy-infra:
     env:
-      TF_VAR_mnemonic: ${{ secrets.mnemonic }}
+      TF_VAR_mnemonic: ${{ secrets.MNEMONIC }}
       
     
     #  Enable these if you want to use the discord/telegram/betteruptime integrations
 
-    #   TF_VAR_discord_webhook_key: ${{ secrets.discord_webhook_key }}
-    #   TF_VAR_telegram_api_key: ${{ secrets.telegram_api_key }}
-    #   TF_VAR_betteruptime_api_key: ${{ secrets.betteruptime_api_key }}
-    #   TF_VAR_betteruptime_requester_email: ${{ secrets.betteruptime_requester_email }}
+    #   TF_VAR_discord_webhook_key: ${{ secrets.DISCORD_WEBHOOK_KEY }}
+    #   TF_VAR_telegram_api_key: ${{ secrets.TELEGRAM_API_KEY }}
+    #   TF_VAR_telegram_chat_id: ${{ secrets.TELEGRAM_CHAT_ID }}
+    #   TF_VAR_betteruptime_api_key: ${{ secrets.BETTERUPTIME_API_KEY }}
+    #   TF_VAR_betteruptime_requester_email: ${{ secrets.BETTERUPTIME_REQUESTER_EMAIL }}
     
     #  Currently not used, but might be in the future
 
-    #   TF_VAR_admin_token_watcher: ${{ secrets.admin_token_watcher }}
+    #   TF_VAR_admin_token_watcher: ${{ secrets.ADMIN_TOKEN_WATCHER }}
 
       IMAGE_NAME: connext/router-publisher
     runs-on: ubuntu-latest
@@ -34,7 +35,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-west-1
+          aws-region: us-east-1
 
       - name: Terraform Init
         run: terraform init
