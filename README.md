@@ -18,8 +18,6 @@ config
       ├── service    <- Generic, configurable ECS service
       ├── ecs        <- ECS cluster definition
       ├── iam        <- IAM roles needed for ECS
-      ├── kms        <- KMS and secrets
-      ├── kms        <- KMS and secrets
       └── networking <- VPCs, Subnets and all those shenanigans
 
 ```
