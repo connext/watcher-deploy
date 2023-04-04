@@ -8,6 +8,8 @@ locals {
   local_watcher_config = jsonencode({
     server = {
       adminToken = var.admin_token_watcher
+      port       = 8080
+
     }
     environment = "production"
     logLevel    = "debug"
