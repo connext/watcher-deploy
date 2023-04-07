@@ -7,13 +7,14 @@ on:
 
 jobs:
   deploy-infra:
+    environment: production
     env:
       TF_VAR_mnemonic: ${{ secrets.MNEMONIC }}
+      TF_VAR_discord_webhook_key: ${{ secrets.DISCORD_WEBHOOK_KEY }}
       
     
     #  Enable these if you want to use the discord/telegram/betteruptime integrations
 
-    #   TF_VAR_discord_webhook_key: ${{ secrets.DISCORD_WEBHOOK_KEY }}
     #   TF_VAR_telegram_api_key: ${{ secrets.TELEGRAM_API_KEY }}
     #   TF_VAR_telegram_chat_id: ${{ secrets.TELEGRAM_CHAT_ID }}
     #   TF_VAR_betteruptime_api_key: ${{ secrets.BETTERUPTIME_API_KEY }}
@@ -35,7 +36,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
+          aws-region: us-east-2
       
       - name: Set up Terraform Version
         uses: hashicorp/setup-terraform@v2

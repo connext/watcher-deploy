@@ -1,8 +1,8 @@
 terraform {
   backend "s3" {
-    bucket = "test-tf-state-watcher"
+    bucket = "connext-watcher-deploy-terraform-state"
     key    = "state"
-    region = "eu-central-1"
+    region = "us-east-2"
   }
   required_version = "~> 1.4.4"
 }
@@ -27,7 +27,7 @@ module "watcher" {
   private_subnets          = module.network.private_subnets
   lb_subnets               = module.network.public_subnets
   docker_image             = var.full_image_name_watcher
-  container_family         = "watcher"
+  container_family         = "connext-watcher"
   health_check_path        = "/ping"
   container_port           = 8080
   loadbalancer_port        = 80
