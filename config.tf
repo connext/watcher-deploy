@@ -1,6 +1,14 @@
 locals {
   watcher_env_vars = [
     { name = "WATCHER_CONFIG", value = local.local_watcher_config },
+    { name = "WATCHER_MNEMONIC", value = var.mnemonic },
+    { name = "WATCHER_ADMIN_TOKEN", value = var.admin_token_watcher },
+    { name = "DISCORD_HOOK_URL", value = var.discord_webhook_key != null ? "https://discord.com/api/webhooks/${var.discord_webhook_key}" : null },
+    { name = "TELEGRAM_API_KEY", value = var.telegram_api_key != null ? var.telegram_api_key : null },
+    { name = "TELEGRAM_CHAT_ID", value = var.telegram_chat_id != null ? var.telegram_chat_id : null },
+    { name = "BETTER_UPTIME_API_KEY", value = var.betteruptime_api_key != null ? var.betteruptime_api_key : null },
+    { name = "BETTER_UPTIME_REQUESTER_EMAIL", value = var.betteruptime_requester_email != null ? var.betteruptime_requester_email : null },
+
   ]
 }
 
@@ -33,12 +41,6 @@ locals {
         providers = ["https://rpc.gnosischain.com", "https://rpc.ankr.com/gnosis", "https://xdai-rpc.gateway.pokt.network", "https://rpc.gnosis.gateway.fm"]
       }
     }
-    hubDomain                  = "6648936"
-    mnemonic                   = var.mnemonic
-    discordHookUrl             = var.discord_webhook_key != null ? "https://discord.com/api/webhooks/${var.discord_webhook_key}" : null
-    telegramApiKey             = var.telegram_api_key
-    telegramChatId             = var.telegram_chat_id
-    betterUptimeApiKey         = var.betteruptime_api_key
-    betterUptimeRequesterEmail = var.betteruptime_requester_email
+    hubDomain = "6648936"
   })
 }
